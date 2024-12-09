@@ -12,7 +12,6 @@ disk_used=$(df -Bm | grep "^/dev/" | grep -v "/boot$" | awk '{du += $3} END {pri
 disk_total=$(df -Bg | grep "^/dev/" | grep -v "/boot$" | awk '{dt += $2} END {print dt}')
 disk_persentage=$(df -Bm | grep "^/dev/" | grep -v "/boot$" | awk '{dt += $2} {du += $3} END {printf "%d", du/dt*100}')
 
-#cpu_load=$(top -bn2 | grep "Cpu(s)" | awk '{printf "%.1f%%", $2 + $4}')
 cpu_load=$(top -bn2 | grep "%Cpu(s)" | tail -n1 | awk '{usage=$2+$4} END {printf "%.1f%%\n", usage}')
 lst_boot=$(who -b | awk '$1 == "system" {print $3 " " $4}')
 lvm_use=$(lsblk | grep -q "lvm" && echo "yes" || echo "no")
@@ -34,3 +33,4 @@ wall "	#Architecture: $arch
 	#User log: $user_log
 	#Network: IP $net_ip ($net_mac)
 	#Sudo: $sudo_cmds cmd"
+
